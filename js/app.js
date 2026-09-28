@@ -145,13 +145,205 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const btnDispatch = document.getElementById('btn-dispatch-convoy');
-  if (btnDispatch) {
-    btnDispatch.addEventListener('click', () => {
-      worldMapEngine.playerGold += 400;
-      worldMapEngine.playerPrestige += 20;
-      worldMapEngine.updateHUD();
-      showEventModal('تسيير قافلة تجارية محمية', 'أبحرت قافلة تجارية ترافقها فرقاطتان ملكيتان، ونجحت في جلب عائدات بقيمة +400 غينيا إلى الخزينة.');
+  // Sidebar Sub-Tabs: Colony vs Fleet
+  const tabColony = document.getElementById('side-tab-colony');
+  const tabFleet = document.getElementById('side-tab-fleet');
+  const panelColony = document.getElementById('side-panel-colony');
+  const panelFleet = document.getElementById('side-panel-fleet');
+
+  if (tabColony && tabFleet && panelColony && panelFleet) {
+    tabColony.addEventListener('click', () => {
+      tabColony.style.background = '#d4af37';
+      tabColony.style.color = '#1a1005';
+      tabFleet.style.background = '#0f2444';
+      tabFleet.style.color = '#ffd700';
+      panelColony.style.display = 'flex';
+      panelFleet.style.display = 'none';
+    });
+
+    tabFleet.addEventListener('click', () => {
+      tabFleet.style.background = '#d4af37';
+      tabFleet.style.color = '#1a1005';
+      tabColony.style.background = '#0f2444';
+      tabColony.style.color = '#ffd700';
+      panelColony.style.display = 'none';
+      panelFleet.style.display = 'flex';
+    });
+  }
+
+  // Squadron Selection Callback from World Map
+  window.onSquadronSelectedCallback = (sq) => {
+    const elTitle = document.getElementById('side-fleet-title');
+    const elCmd = document.getElementById('side-fleet-commander');
+    const elState = document.getElementById('side-fleet-state');
+    const elShipCount = document.getElementById('side-fleet-ship-count');
+    const elGuns = document.getElementById('side-fleet-guns');
+    const elList = document.getElementById('side-fleet-ships-list');
+
+    if (elTitle) elTitle.textContent = sq.nameAr;
+    if (elCmd) elCmd.textContent = `القائد: ${sq.commanderAr}`;
+    if (elState) {
+      const stateLabels = {
+        patrolling: 'دورية قتالية (Patrolling)',
+        blockading: 'حصار بحري نيلسوني (Blockading)',
+        sailing: 'مبحر نحو الهدف (Sailing)',
+        raiding: 'غارة قرصنة (Raiding)'
+      };
+      elState.textContent = stateLabels[sq.state] || sq.state;
+      elState.style.color = sq.state === 'blockading' ? '#f87171' : '#4ade80';
+    }
+
+    const totalGuns = sq.ships.reduce((acc, s) => acc + (s.guns || 0), 0);
+    if (elShipCount) elShipCount.textContent = `${sq.ships.length} سفن حربية`;
+    if (elGuns) elGuns.textContent = `${totalGuns} مدفعاً`;
+
+    if (elList) {
+      elList.innerHTML = sq.ships.map(s => `
+        <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:0.85rem;">
+          <span style="font-weight:bold; color:#ffd700;">⛵ ${s.name}</span>
+          <span style="color:#4ade80;">${s.guns} مدفعاً • ${s.hull}/${s.maxHull}</span>
+        </div>
+      `).join('');
+    }
+  };
+
+  // Populate initial squadron card
+  if (worldMapEngine.squadrons && worldMapEngine.squadrons[0]) {
+    window.onSquadronSelectedCallback(worldMapEngine.squadrons[0]);
+  }
+
+  // Fleet Command Buttons
+  const btnFleetSailPort = document.getElementById('btn-fleet-sail-port');
+  const btnFleetBlockade = document.getElementById('btn-fleet-blockade');
+  const btnFleetQuickBattle = document.getElementById('btn-fleet-quick-battle');
+
+  if (btnFleetSailPort) {
+    btnFleetSailPort.addEventListener('click', () => {
+      const sq = worldMapEngine.selectedSquadron;
+      const port = worldMapEngine.selectedPort;
+      if (!sq || !port) return;
+      worldMapEngine.orderSquadronToTarget(sq, port.lon, port.lat, null, port);
+      showEventModal('أمر إبحار صادر', `أمر اللوردات أسطول «${sq.nameAr}» برفع الأشرعة والإبحار فوراً نحو ميناء «${port.nameAr}».`);
+    });
+  }
+
+  if (btnFleetBlockade) {
+    btnFleetBlockade.addEventListener('click', () => {
+      const sq = worldMapEngine.selectedSquadron;
+      const port = worldMapEngine.selectedPort;
+      if (!sq || !port) return;
+      if (port.owner === 'britain') {
+        showEventModal('تنبيه من الأميرالية', 'لا يمكن فرض حصار على ميناء بريطاني صديق!');
+        return;
+      }
+      worldMapEngine.orderSquadronToTarget(sq, port.lon, port.lat, null, port);
+      sq.state = 'blockading';
+      window.onSquadronSelectedCallback(sq);
+      showEventModal('فرض حصار بحري نيلسوني', `تحرك أسطول «${sq.nameAr}» لفرض حصار بحري على ميناء «${port.nameAr}» لقطع إمدادات العدو ومصادرة سفنه التجارية.`);
+    });
+  }
+
+  if (btnFleetQuickBattle) {
+    btnFleetQuickBattle.addEventListener('click', () => {
+      document.querySelector('[data-tab="naval-3d"]').click();
+    });
+  }
+
+  // Interception Modal Handlers
+  let currentInterceptBattle = null;
+  window.onFleetInterceptionCallback = (playerSq, enemySq) => {
+    currentInterceptBattle = { playerSq, enemySq };
+    const modal = document.getElementById('interception-modal');
+    const elPlayer = document.getElementById('intercept-player-fleet');
+    const elEnemy = document.getElementById('intercept-enemy-fleet');
+    const elBody = document.getElementById('intercept-body');
+
+    if (elPlayer) elPlayer.textContent = `أسطولنا: ${playerSq.nameAr} (${playerSq.ships.length} سفن) • ${playerSq.commanderAr}`;
+    if (elEnemy) elEnemy.textContent = `أسطول العدو: ${enemySq.nameAr} (${enemySq.ships.length} سفن) • ${enemySq.commanderAr}`;
+    if (elBody) elBody.textContent = `رصدت صواري استطلاعنا أسطول العدو في مرمى مدافع 32 رطلاً. قارع الأجراس وأعلن حالة التأهب القصوى لخوض الاشتباك.`;
+
+    if (modal) modal.classList.add('open');
+  };
+
+  const btnEngage3D = document.getElementById('btn-intercept-engage-3d');
+  const btnAutoResolve = document.getElementById('btn-intercept-autoresolve');
+  const btnRetreat = document.getElementById('btn-intercept-retreat');
+
+  if (btnEngage3D) {
+    btnEngage3D.addEventListener('click', () => {
+      const modal = document.getElementById('interception-modal');
+      if (modal) modal.classList.remove('open');
+
+      if (!currentInterceptBattle) return;
+      const pSq = currentInterceptBattle.playerSq;
+      const eSq = currentInterceptBattle.enemySq;
+
+      const dynamicMission = {
+        id: 'intercept_' + Date.now(),
+        nameAr: `معركة ${pSq.nameAr} ضد ${eSq.nameAr}`,
+        playerShipClass: pSq.ships[0].classId || 'thirdRate',
+        playerName: `${pSq.ships[0].name} (${pSq.commanderAr})`,
+        windDirection: 270,
+        windSpeedKnots: 15,
+        enemyFleet: eSq.ships.map((s, idx) => ({
+          name: s.name,
+          faction: eSq.faction,
+          shipClass: s.classId || 'thirdRate',
+          guns: s.guns || 74,
+          hull: s.hull || 2400,
+          crew: 600,
+          position: { x: 120 + idx * 60, z: -60 + idx * 80 },
+          role: 'Line of Battle'
+        })),
+        rewardGuineas: eSq.treasureCargoGuineas || 1800,
+        rewardPrestige: 250,
+        rewardTitleAr: 'قاهر الأسطول المعادي'
+      };
+
+      document.querySelector('[data-tab="naval-3d"]').click();
+      setTimeout(() => {
+        naval3DEngine.activeMission = dynamicMission;
+        naval3DEngine.loadMission(dynamicMission.id);
+      }, 100);
+    });
+  }
+
+  if (btnAutoResolve) {
+    btnAutoResolve.addEventListener('click', () => {
+      const modal = document.getElementById('interception-modal');
+      if (modal) modal.classList.remove('open');
+
+      if (!currentInterceptBattle) return;
+      const pGuns = currentInterceptBattle.playerSq.ships.reduce((a, s) => a + (s.guns || 0), 0);
+      const eGuns = currentInterceptBattle.enemySq.ships.reduce((a, s) => a + (s.guns || 0), 0);
+
+      const winChance = pGuns / (pGuns + eGuns);
+      const isWin = Math.random() < (winChance + 0.15);
+
+      if (isWin) {
+        const prize = currentInterceptBattle.enemySq.treasureCargoGuineas || 1200;
+        worldMapEngine.playerGold += prize;
+        worldMapEngine.playerPrestige += 150;
+        worldMapEngine.updateHUD();
+
+        currentInterceptBattle.enemySq.lat = -999;
+        if (window.AdmiraltyAudio) window.AdmiraltyAudio.playVictoryFanfare();
+        showEventModal('نصر حاسم في الحسم التلقائي!', `سحقت نيران مدافع جلالة الملك أسطول العدو! غنائم المعركة: +${prize} غينيا ذهبية.`);
+      } else {
+        worldMapEngine.playerPrestige = Math.max(0, worldMapEngine.playerPrestige - 40);
+        worldMapEngine.updateHUD();
+        showEventModal('تراجع تكتيكي', 'اضطرت سفننا للمناورة والانسحاب بعد تبادل مدفعي عنيف مع سفن العدو.');
+      }
+    });
+  }
+
+  if (btnRetreat) {
+    btnRetreat.addEventListener('click', () => {
+      const modal = document.getElementById('interception-modal');
+      if (modal) modal.classList.remove('open');
+      if (currentInterceptBattle && currentInterceptBattle.playerSq) {
+        currentInterceptBattle.playerSq.lon += 3.0;
+      }
     });
   }
 

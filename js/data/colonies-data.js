@@ -1,6 +1,6 @@
 /**
  * Sovereign of the Seas: Empire & Admiralty
- * Colonies, Global Ports, Trade Routes & Commodity Markets Data
+ * Master Colonies, Ports, Trade Routes, Commodities, and Active Fleets Data
  * Age of Sail (1775-1815)
  */
 
@@ -72,7 +72,7 @@ window.AdmiraltyColoniesData = {
     }
   },
 
-  // 16 Historic Ports & Colonies Across the Globe
+  // 16 Historic Ports & Colonies with Real Geographic Coordinates (lat, lon)
   ports: [
     // --- BRITISH EMPIRE ---
     {
@@ -81,7 +81,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Portsmouth & London (Admiralty HQ)',
       owner: 'britain',
       region: 'Home Waters',
-      coords: { x: 495, y: 155 }, // Relative coordinates on global antique chart (1000x600)
+      lat: 50.8,
+      lon: -1.1,
       fortLevel: 4, // Grand Citadel
       dockyardLevel: 4, // Royal Master Shipyard
       revenuePerTurn: 450,
@@ -97,7 +98,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Kingston (Jamaica)',
       owner: 'britain',
       region: 'Caribbean',
-      coords: { x: 255, y: 340 },
+      lat: 17.9,
+      lon: -76.8,
       fortLevel: 3,
       dockyardLevel: 3,
       revenuePerTurn: 320,
@@ -113,7 +115,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Bridgetown (Barbados)',
       owner: 'britain',
       region: 'Caribbean',
-      coords: { x: 310, y: 375 },
+      lat: 13.1,
+      lon: -59.6,
       fortLevel: 2,
       dockyardLevel: 2,
       revenuePerTurn: 220,
@@ -129,7 +132,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Halifax (Nova Scotia)',
       owner: 'britain',
       region: 'North America',
-      coords: { x: 290, y: 200 },
+      lat: 44.6,
+      lon: -63.6,
       fortLevel: 3,
       dockyardLevel: 3,
       revenuePerTurn: 210,
@@ -145,7 +149,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Gibraltar (The Rock)',
       owner: 'britain',
       region: 'Mediterranean',
-      coords: { x: 470, y: 245 },
+      lat: 36.1,
+      lon: -5.3,
       fortLevel: 4,
       dockyardLevel: 2,
       revenuePerTurn: 180,
@@ -161,7 +166,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Calcutta (Bengal Presidency)',
       owner: 'britain',
       region: 'India',
-      coords: { x: 790, y: 330 },
+      lat: 22.6,
+      lon: 88.4,
       fortLevel: 3,
       dockyardLevel: 3,
       revenuePerTurn: 520,
@@ -177,7 +183,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Bombay (Teak Dockyards)',
       owner: 'britain',
       region: 'India',
-      coords: { x: 740, y: 345 },
+      lat: 18.9,
+      lon: 72.8,
       fortLevel: 3,
       dockyardLevel: 4,
       revenuePerTurn: 380,
@@ -193,7 +200,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Cape Town (Cape of Good Hope)',
       owner: 'britain',
       region: 'South Africa',
-      coords: { x: 550, y: 515 },
+      lat: -33.9,
+      lon: 18.4,
       fortLevel: 3,
       dockyardLevel: 2,
       revenuePerTurn: 240,
@@ -211,7 +219,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Brest (French Atlantic Fleet)',
       owner: 'france',
       region: 'Home Waters',
-      coords: { x: 470, y: 170 },
+      lat: 48.4,
+      lon: -4.5,
       fortLevel: 4,
       dockyardLevel: 4,
       revenuePerTurn: 390,
@@ -227,7 +236,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Toulon (French Med Fleet)',
       owner: 'france',
       region: 'Mediterranean',
-      coords: { x: 510, y: 220 },
+      lat: 43.1,
+      lon: 5.9,
       fortLevel: 4,
       dockyardLevel: 4,
       revenuePerTurn: 360,
@@ -243,7 +253,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Fort-de-France (Martinique)',
       owner: 'france',
       region: 'Caribbean',
-      coords: { x: 305, y: 355 },
+      lat: 14.6,
+      lon: -61.1,
       fortLevel: 3,
       dockyardLevel: 2,
       revenuePerTurn: 280,
@@ -259,7 +270,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Pondicherry (French India)',
       owner: 'france',
       region: 'India',
-      coords: { x: 765, y: 375 },
+      lat: 11.9,
+      lon: 79.8,
       fortLevel: 3,
       dockyardLevel: 2,
       revenuePerTurn: 260,
@@ -277,7 +289,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Cádiz (Spanish Treasure Port)',
       owner: 'spain',
       region: 'Home Waters',
-      coords: { x: 460, y: 235 },
+      lat: 36.5,
+      lon: -6.3,
       fortLevel: 4,
       dockyardLevel: 3,
       revenuePerTurn: 420,
@@ -293,7 +306,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Havana (Fortress of the Indies)',
       owner: 'spain',
       region: 'Caribbean',
-      coords: { x: 235, y: 315 },
+      lat: 23.1,
+      lon: -82.4,
       fortLevel: 4,
       dockyardLevel: 4,
       revenuePerTurn: 480,
@@ -309,7 +323,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Cartagena de Indias',
       owner: 'spain',
       region: 'Caribbean',
-      coords: { x: 260, y: 395 },
+      lat: 10.4,
+      lon: -75.5,
       fortLevel: 4,
       dockyardLevel: 2,
       revenuePerTurn: 350,
@@ -327,7 +342,8 @@ window.AdmiraltyColoniesData = {
       nameEn: 'Nassau (Pirate Republic Haven)',
       owner: 'pirates',
       region: 'Caribbean',
-      coords: { x: 250, y: 290 },
+      lat: 25.0,
+      lon: -77.3,
       fortLevel: 2,
       dockyardLevel: 1,
       revenuePerTurn: 160,
@@ -336,6 +352,138 @@ window.AdmiraltyColoniesData = {
       demands: ['silver', 'sugar', 'timber'],
       icon: '☠️🏝️',
       descAr: 'ملاذ القراصنة وسفن القرصنة المفوضة، ممر حرج يهدد تجارة الأطلسي.'
+    }
+  ],
+
+  // Active Fleets & Squadrons on the Global Chart
+  squadrons: [
+    // BRITISH ROYAL NAVY SQUADRONS (Player Controlled)
+    {
+      id: 'channel_fleet',
+      nameAr: 'أسطول القناة الإنجليزية الملكي',
+      nameEn: 'Royal Channel Fleet',
+      faction: 'britain',
+      commanderAr: 'الأدميرال اللورد ريتشارد هاو',
+      lat: 49.8,
+      lon: -3.8,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'HMS Victory', classId: 'firstRate', guns: 104, hull: 3500, maxHull: 3500 },
+        { name: 'HMS Sovereign', classId: 'thirdRate', guns: 74, hull: 2500, maxHull: 2500 },
+        { name: 'HMS Temeraire', classId: 'thirdRate', guns: 74, hull: 2500, maxHull: 2500 }
+      ],
+      state: 'patrolling',
+      icon: '🇬🇧⛵'
+    },
+    {
+      id: 'west_indies_squadron',
+      nameAr: 'أسطول جزر الهند الغربية الكاريبي',
+      nameEn: 'West Indies Squadron',
+      faction: 'britain',
+      commanderAr: 'الأدميرال السير جورج رودني',
+      lat: 18.5,
+      lon: -75.0,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'HMS Surprise', classId: 'frigateFifthRate', guns: 38, hull: 1600, maxHull: 1600 },
+        { name: 'HMS Indefatigable', classId: 'frigateFifthRate', guns: 44, hull: 1750, maxHull: 1750 },
+        { name: 'HMS Sophie', classId: 'sloopOfWar', guns: 18, hull: 900, maxHull: 900 }
+      ],
+      state: 'patrolling',
+      icon: '🇬🇧⛵'
+    },
+    {
+      id: 'mediterranean_squadron',
+      nameAr: 'أسطول البحر الأبيض المتوسط الملكي',
+      nameEn: 'Royal Mediterranean Fleet',
+      faction: 'britain',
+      commanderAr: 'نائب الأدميرال اللورد هوراشيو نيلسون',
+      lat: 36.4,
+      lon: -5.0,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'HMS Vanguard', classId: 'thirdRate', guns: 74, hull: 2500, maxHull: 2500 },
+        { name: 'HMS Bellerophon', classId: 'thirdRate', guns: 74, hull: 2500, maxHull: 2500 },
+        { name: 'HMS Shannon', classId: 'frigateFifthRate', guns: 38, hull: 1600, maxHull: 1600 }
+      ],
+      state: 'blockading',
+      icon: '🇬🇧⛵'
+    },
+    {
+      id: 'east_indies_squadron',
+      nameAr: 'أسطول الهند الشرقية والبنغال',
+      nameEn: 'East Indies Station',
+      faction: 'britain',
+      commanderAr: 'الكومودور إدوارد هيوز',
+      lat: 16.5,
+      lon: 82.0,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'HMS Intrepid', classId: 'thirdRate', guns: 64, hull: 2200, maxHull: 2200 },
+        { name: 'Kent (East Indiaman)', classId: 'eastIndiaman', guns: 28, hull: 1800, maxHull: 1800 }
+      ],
+      state: 'patrolling',
+      icon: '🇬🇧⛵'
+    },
+
+    // ENEMY FACTIONS SQUADRONS (AI Controlled)
+    {
+      id: 'french_atlantic_fleet',
+      nameAr: 'أسطول بريست الفرنسي (Marine Royale)',
+      nameEn: 'French Atlantic Fleet (Brest)',
+      faction: 'france',
+      commanderAr: 'الأدميرال بيير دي فيلنوف',
+      lat: 47.6,
+      lon: -6.5,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'Bucentaure', classId: 'thirdRate', guns: 80, hull: 2700, maxHull: 2700 },
+        { name: 'Redoutable', classId: 'thirdRate', guns: 74, hull: 2300, maxHull: 2300 },
+        { name: 'Formidable', classId: 'thirdRate', guns: 80, hull: 2600, maxHull: 2600 }
+      ],
+      state: 'patrolling',
+      icon: '⚜️⛵'
+    },
+    {
+      id: 'spanish_silver_armada',
+      nameAr: 'أسطول الفضة الإسباني (الأرمادا الذهبية)',
+      nameEn: 'Spanish Silver Treasure Armada',
+      faction: 'spain',
+      commanderAr: 'الأدميرال دون فيديريكو غرافينا',
+      lat: 23.2,
+      lon: -81.5, // Gathers at Havana, Cuba before crossing the Atlantic
+      targetLat: 36.5,
+      targetLon: -6.3, // Ultimate destination: Cadiz
+      ships: [
+        { name: 'Santísima Trinidad', classId: 'firstRate', guns: 136, hull: 3600, maxHull: 3600 },
+        { name: 'Santa Ana', classId: 'firstRate', guns: 112, hull: 3200, maxHull: 3200 },
+        { name: 'San Juan Nepomuceno', classId: 'thirdRate', guns: 74, hull: 2400, maxHull: 2400 }
+      ],
+      treasureCargoGuineas: 2500,
+      state: 'sailing',
+      icon: '🇪🇸⛵'
+    },
+    {
+      id: 'caribbean_pirates',
+      nameAr: 'قراصنة الكاريبي والبهاماس',
+      nameEn: 'Caribbean Buccaneer Corsairs',
+      faction: 'pirates',
+      commanderAr: 'القرصان إدوارد تيتش (اللحية السوداء)',
+      lat: 24.2,
+      lon: -76.5,
+      targetLat: null,
+      targetLon: null,
+      ships: [
+        { name: 'Queen Anne\'s Revenge', classId: 'frigateFifthRate', guns: 40, hull: 1600, maxHull: 1600 },
+        { name: 'Sea Wolf Brig', classId: 'sloopOfWar', guns: 18, hull: 850, maxHull: 850 }
+      ],
+      state: 'raiding',
+      icon: '☠️⛵'
     }
   ],
 

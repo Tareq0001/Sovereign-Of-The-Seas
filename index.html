@@ -96,51 +96,107 @@
           <canvas id="world-map-canvas"></canvas>
         </div>
 
-        <!-- Colony & Port Inspector Sidebar -->
+        <!-- Colony & Fleet Command Sidebar -->
         <aside class="colony-sidebar">
-          <div class="colony-header">
-            <h3 class="colony-title" id="side-colony-title">بورتسموث ولندن</h3>
-            <span class="colony-owner-badge" id="side-colony-owner" style="background:#8b0000; color:#fff;">🇬🇧 الإمبراطورية البريطانية</span>
-          </div>
-
-          <div id="side-colony-details">
-            <div class="colony-stat-row">
-              <span>الإقليم البحري:</span>
-              <span class="colony-stat-val" id="side-colony-region">المياه الإقليمية البريطانية</span>
-            </div>
-            <div class="colony-stat-row">
-              <span>مستوى الحصن الساحلي:</span>
-              <span class="colony-stat-val" id="side-colony-fort">قلعة عظمى (مستوى 4)</span>
-            </div>
-            <div class="colony-stat-row">
-              <span>الترسانة الملكية:</span>
-              <span class="colony-stat-val" id="side-colony-dockyard">أحواض ملكية كبرى (مستوى 4)</span>
-            </div>
-            <div class="colony-stat-row">
-              <span>العائد المالي للدورة:</span>
-              <span class="colony-stat-val" id="side-colony-revenue">+450 غينيا</span>
-            </div>
-            <div class="colony-stat-row">
-              <span>السلع والإنتاج:</span>
-              <span class="colony-stat-val" id="side-colony-produces">🌲 أخشاب البلوط الملكي</span>
-            </div>
-          </div>
-
-          <p style="font-size:0.9rem; line-height:1.5; color:#a9c2de; margin-top:8px;" id="side-colony-desc">
-            المقر الرئيسي لقيادة البحرية الملكية ولوردات الأميرالية وأضخم ترسانة حربية لبناء سفن الدرجة الأولى.
-          </p>
-
-          <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
-            <button class="btn-brass" id="btn-upgrade-fort" style="justify-content:center;">
-              <span>🏰 ترقية الحصن الساحلي (500 غينيا)</span>
+          
+          <!-- Sub-Tabs: Colony vs Fleet -->
+          <div style="display:flex; gap:6px; border-bottom:1px solid var(--gold-shadow); padding-bottom:8px; margin-bottom:8px;">
+            <button class="btn-brass" id="side-tab-colony" style="flex:1; padding:6px 8px; font-size:0.85rem; justify-content:center;">
+              🏛️ المستعمرة
             </button>
-            <button class="btn-brass" id="btn-upgrade-dockyard" style="justify-content:center;">
-              <span>⚓ تطوير الترسانة الجافة (700 غينيا)</span>
-            </button>
-            <button class="btn-crimson" id="btn-dispatch-convoy" style="justify-content:center;">
-              <span>⛵ تسيير قافلة تجارية محمية</span>
+            <button class="btn-brass" id="side-tab-fleet" style="flex:1; padding:6px 8px; font-size:0.85rem; justify-content:center; background:#0f2444; color:#ffd700;">
+              ⚓ قيادة الأسطول
             </button>
           </div>
+
+          <!-- Section A: Colony Details -->
+          <div id="side-panel-colony" style="display:flex; flex-direction:column; gap:12px; height:100%;">
+            <div class="colony-header">
+              <h3 class="colony-title" id="side-colony-title">بورتسموث ولندن</h3>
+              <span class="colony-owner-badge" id="side-colony-owner" style="background:#8b0000; color:#fff;">🇬🇧 الإمبراطورية البريطانية</span>
+            </div>
+
+            <div id="side-colony-details">
+              <div class="colony-stat-row">
+                <span>الإقليم البحري:</span>
+                <span class="colony-stat-val" id="side-colony-region">المياه الإقليمية البريطانية</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>مستوى الحصن الساحلي:</span>
+                <span class="colony-stat-val" id="side-colony-fort">قلعة عظمى (مستوى 4)</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>الترسانة الملكية:</span>
+                <span class="colony-stat-val" id="side-colony-dockyard">أحواض ملكية كبرى (مستوى 4)</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>العائد المالي للدورة:</span>
+                <span class="colony-stat-val" id="side-colony-revenue">+450 غينيا</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>السلع والإنتاج:</span>
+                <span class="colony-stat-val" id="side-colony-produces">🌲 أخشاب البلوط الملكي</span>
+              </div>
+            </div>
+
+            <p style="font-size:0.88rem; line-height:1.5; color:#a9c2de;" id="side-colony-desc">
+              المقر الرئيسي لقيادة البحرية الملكية ولوردات الأميرالية وأضخم ترسانة حربية لبناء سفن الدرجة الأولى.
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
+              <button class="btn-brass" id="btn-upgrade-fort" style="justify-content:center;">
+                <span>🏰 ترقية الحصن الساحلي (500 غينيا)</span>
+              </button>
+              <button class="btn-brass" id="btn-upgrade-dockyard" style="justify-content:center;">
+                <span>⚓ تطوير الترسانة الجافة (700 غينيا)</span>
+              </button>
+              <button class="btn-crimson" id="btn-dispatch-convoy" style="justify-content:center;">
+                <span>⛵ تسيير قافلة تجارية محمية (+400)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section B: Selected Fleet Command -->
+          <div id="side-panel-fleet" style="display:none; flex-direction:column; gap:12px; height:100%;">
+            <div class="colony-header">
+              <h3 class="colony-title" id="side-fleet-title" style="color:#ffd700;">أسطول القناة الملكي</h3>
+              <span class="colony-owner-badge" id="side-fleet-commander" style="background:#091c38; border:1px solid #ffd700; color:#ffd700;">
+                القائد: الأدميرال اللورد ريتشارد هاو
+              </span>
+            </div>
+
+            <div style="font-size:0.9rem; color:#b0c5de;">
+              <div class="colony-stat-row">
+                <span>الحالة التكتيكية:</span>
+                <span class="colony-stat-val" id="side-fleet-state" style="color:#4ade80;">دورية قتالية (Patrolling)</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>إجمالي السفن:</span>
+                <span class="colony-stat-val" id="side-fleet-ship-count">3 سفن خط معركة</span>
+              </div>
+              <div class="colony-stat-row">
+                <span>القوة النارية:</span>
+                <span class="colony-stat-val" id="side-fleet-guns">252 مدفعاً</span>
+              </div>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.3); border:1px solid #1c365d; border-radius:4px; padding:8px; max-height:160px; overflow-y:auto;" id="side-fleet-ships-list">
+              <!-- Ships listed dynamically -->
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
+              <button class="btn-brass" id="btn-fleet-sail-port" style="justify-content:center;">
+                <span>⛵ إبحار إلى الميناء المحدد</span>
+              </button>
+              <button class="btn-crimson" id="btn-fleet-blockade" style="justify-content:center;">
+                <span>⚔️ فرض حصار بحري على الميناء</span>
+              </button>
+              <button class="btn-brass" id="btn-fleet-quick-battle" style="justify-content:center; background:#1c4b82; color:#fff;">
+                <span>🌊 تفقد الأسطول في البحر 3D</span>
+              </button>
+            </div>
+          </div>
+
         </aside>
 
       </div>
@@ -359,6 +415,34 @@
       </div>
     </div>
 
+    <!-- Naval Battle Interception Modal (اشتباك في عرض البحر) -->
+    <div class="admiralty-modal-backdrop" id="interception-modal">
+      <div class="parchment-scroll-modal" style="max-width: 680px; border-color: #8b0000;">
+        <div class="wax-seal" style="background:#8b0000;">⚔️</div>
+        <h2 class="scroll-title" id="intercept-title" style="color:#8b0000;">اشتباك بحري في عرض المحيط!</h2>
+        <div class="scroll-body" id="intercept-body">
+          رصدت فرقاطات الاستطلاع أسطول العدو المكون من سفن خط المعركة في مرمى المدافع.
+        </div>
+
+        <div style="background:rgba(0,0,0,0.06); border:1px solid #8b0000; border-radius:4px; padding:12px; margin-bottom:20px; text-align:right;">
+          <div style="font-weight:bold; color:#1a1005; margin-bottom:6px;" id="intercept-player-fleet">أسطولنا: أسطول القناة الملكي (HMS Victory)</div>
+          <div style="font-weight:bold; color:#8b0000;" id="intercept-enemy-fleet">أسطول العدو: أسطول بريست الفرنسي (Bucentaure)</div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <button class="btn-crimson" id="btn-intercept-engage-3d" style="padding:10px 24px; font-size:1.05rem;">
+            <span>⚔️ خوض المعركة التكتيكية 3D</span>
+          </button>
+          <button class="btn-brass" id="btn-intercept-autoresolve" style="padding:10px 20px;">
+            <span>🎲 حسم تلقائي سريع</span>
+          </button>
+          <button class="btn-brass" id="btn-intercept-retreat" style="padding:10px 16px; background:#e2d5b5; color:#333;">
+            <span>💨 مناورة والانسحاب</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Attribution Footer -->
     <footer style="text-align:center; margin-top:40px; border-top:1px solid var(--gold-shadow); padding-top:20px; color:#889bb0; font-size:0.95rem;">
       <div style="font-family:var(--font-title); font-size:1.15rem; color:var(--gold-bright); margin-bottom:6px;">
@@ -376,6 +460,7 @@
   <script src="libs/OrbitControls.js"></script>
   
   <!-- Data Catalogs -->
+  <script src="js/data/world-land.js"></script>
   <script src="js/data/ships-data.js"></script>
   <script src="js/data/colonies-data.js"></script>
   <script src="js/data/missions-data.js"></script>
